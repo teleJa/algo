@@ -5,6 +5,7 @@ type ListNode struct {
 	Next *ListNode
 }
 
+// 21
 func mergeTwoLists(list1 *ListNode, list2 *ListNode) *ListNode {
 
 	dummy := &ListNode{}
@@ -29,4 +30,31 @@ func mergeTwoLists(list1 *ListNode, list2 *ListNode) *ListNode {
 	}
 
 	return dummy.Next
+}
+
+// 86
+func partition(head *ListNode, x int) *ListNode {
+
+	dummy1 := &ListNode{}
+	dummy2 := &ListNode{}
+
+	p1 := dummy1
+	p2 := dummy2
+
+	for head != nil {
+		if head.Val < x {
+			p1.Next = head
+			p1 = p1.Next
+		} else {
+			p2.Next = head
+			p2 = p2.Next
+		}
+
+		// 断开原链表,避免出现环
+		n := head.Next
+		head.Next = nil
+		head = n
+	}
+	p1.Next = dummy2.Next
+	return dummy1.Next
 }

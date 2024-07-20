@@ -103,3 +103,59 @@ func FindLastNode(head *ListNode, n int) *ListNode {
 	}
 	return p2
 }
+
+// 876
+func middleNode(head *ListNode) *ListNode {
+
+	slow := head
+	fast := head
+	for fast != nil && fast.Next != nil {
+		slow = slow.Next
+		fast = fast.Next.Next
+	}
+	return slow
+}
+
+// 141
+func hasCycle(head *ListNode) bool {
+
+	slow := head
+	fast := head
+	has := false
+	for fast != nil && fast.Next != nil {
+		slow = slow.Next
+		fast = fast.Next.Next
+		if slow == fast {
+			has = true
+			break
+		}
+	}
+	return has
+}
+
+// 142
+func detectCycle(head *ListNode) *ListNode {
+
+	slow := head
+	fast := head
+	has := false
+	for fast != nil && fast.Next != nil {
+		slow = slow.Next
+		fast = fast.Next.Next
+		if slow == fast {
+			has = true
+			break
+		}
+	}
+
+	if !has {
+		return nil
+	}
+
+	slow = head
+	for slow != fast {
+		slow = slow.Next
+		fast = fast.Next
+	}
+	return slow
+}

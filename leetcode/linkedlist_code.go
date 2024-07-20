@@ -58,3 +58,48 @@ func partition(head *ListNode, x int) *ListNode {
 	p1.Next = dummy2.Next
 	return dummy1.Next
 }
+
+// 19
+func removeNthFromEnd(head *ListNode, n int) *ListNode {
+	p1 := head
+	for i := 0; i < n; i++ {
+		p1 = p1.Next
+	}
+
+	p2 := head
+	dummy := &ListNode{}
+	p := dummy
+	for p1 != nil {
+		p.Next = p2
+		p = p.Next
+		p1 = p1.Next
+		p2 = p2.Next
+	}
+	p.Next = p2.Next
+	return dummy.Next
+}
+
+// 19
+func removeNthFromEnd2(head *ListNode, n int) *ListNode {
+
+	dummy := &ListNode{}
+	dummy.Next = head
+	// 寻找倒数第n+1个节点
+	node := FindLastNode(dummy, n+1)
+	node.Next = node.Next.Next
+	return dummy.Next
+}
+
+func FindLastNode(head *ListNode, n int) *ListNode {
+	p1 := head
+	for i := 0; i < n; i++ {
+		p1 = p1.Next
+	}
+
+	p2 := head
+	for p1 != nil {
+		p1 = p1.Next
+		p2 = p2.Next
+	}
+	return p2
+}

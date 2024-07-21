@@ -32,7 +32,7 @@ func mergeTwoLists(list1 *ListNode, list2 *ListNode) *ListNode {
 	return dummy.Next
 }
 
-// 86
+// 86 拆分为2个小链表后合并
 func partition(head *ListNode, x int) *ListNode {
 
 	dummy1 := &ListNode{}
@@ -158,4 +158,21 @@ func detectCycle(head *ListNode) *ListNode {
 		fast = fast.Next
 	}
 	return slow
+}
+
+// 160
+func getIntersectionNode(headA, headB *ListNode) *ListNode {
+
+	p1, p2 := headA, headB
+	for p1 != p2 {
+		if p1 == nil {
+			p1 = headB
+		} else if p2 == nil {
+			p2 = headA
+		} else {
+			p1 = p1.Next
+			p2 = p2.Next
+		}
+	}
+	return p1
 }

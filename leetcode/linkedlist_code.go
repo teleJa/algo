@@ -176,3 +176,34 @@ func getIntersectionNode(headA, headB *ListNode) *ListNode {
 	}
 	return p1
 }
+
+// 使用+1的方式计数需要多传递一个变量
+/*func reverseN(head *ListNode, n int) *ListNode {
+	return reverseN0(head, 1, n)
+}
+
+var nextNode *ListNode
+
+func reverseN0(head *ListNode, i, n int) *ListNode {
+	if i == n {
+		nextNode = head.Next
+		return head
+	}
+	last := reverseN0(head.Next, i+1, n)
+	head.Next.Next = head
+	head.Next = nextNode
+	return last
+}*/
+
+var nextNode *ListNode
+
+func reverseN(head *ListNode, n int) *ListNode {
+	if n == 1 {
+		nextNode = head.Next
+		return head
+	}
+	last := reverseN(head.Next, n-1)
+	head.Next.Next = head
+	head.Next = nextNode
+	return last
+}

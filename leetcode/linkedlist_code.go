@@ -190,21 +190,18 @@ func reverseList(head *ListNode) *ListNode {
 	return last
 }
 
-func reverseN0(head *ListNode, i, n int) *ListNode {
-	if i == n {
-		return head
+// 206 迭代
+func reverseList2(head *ListNode) *ListNode {
+	var prev *ListNode
+	cur := head
+	for cur != nil {
+		n := cur.Next
+		cur.Next = prev
+		prev = cur
+		cur = n
 	}
-
-	last := reverseN0(head.Next, i+1, n)
-	head.Next.Next = head
-	head.Next = nil
-	return last
+	return cur
 }
-
-/*func reverseBetween(head *ListNode, left int, right int) *ListNode {
-
-}
-*/
 
 // 使用+1的方式计数需要多传递一个变量
 /*func reverseN(head *ListNode, n int) *ListNode {
@@ -243,4 +240,22 @@ func reverseBetween(head *ListNode, m int, n int) *ListNode {
 	}
 	head.Next = reverseBetween(head.Next, m-1, n)
 	return head
+}
+
+func reverseKGroup(head *ListNode, k int) *ListNode {
+	if head == nil {
+		return head
+	}
+
+	h := reverseN(head, k)
+	cur, prev := nextNode, nextNode
+	for i := 1; i < k; i++ {
+		if cur == nil {
+			return head
+		}
+		cur = cur.Next
+	}
+
+	prev.Next = reverseKGroup(nextNode, k)
+	return h
 }

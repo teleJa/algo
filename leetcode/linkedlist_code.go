@@ -242,20 +242,32 @@ func reverseBetween(head *ListNode, m int, n int) *ListNode {
 	return head
 }
 
+// 反转完毕后a是尾节点
+// 返回的链表是原链表的一部分
+func reverseByNode(a *ListNode, b *ListNode) *ListNode {
+	var prev *ListNode
+	for a != b {
+		n := a.Next
+		a.Next = prev
+		prev = a
+		a = n
+	}
+	return prev
+}
+
 func reverseKGroup(head *ListNode, k int) *ListNode {
 	if head == nil {
 		return head
 	}
-
-	h := reverseN(head, k)
-	cur, prev := nextNode, nextNode
-	for i := 1; i < k; i++ {
-		if cur == nil {
+	a, b := head, head
+	for i := 0; i < k; i++ {
+		if b == nil {
 			return head
 		}
-		cur = cur.Next
+		b = b.Next
 	}
 
-	prev.Next = reverseKGroup(nextNode, k)
-	return h
+	n := reverseByNode(a, b)
+	a.Next = reverseKGroup(b, k)
+	return n
 }

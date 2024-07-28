@@ -91,10 +91,7 @@ func TestReverseBetween(t *testing.T) {
 	n5.Next = n6
 	n6.Next = n7
 
-	m := 2
-	n := 6
-
-	node := reverseBetween(n1, m, n-m+1)
+	node := reverseBetween(n1, 2, 6)
 	log.Println("node:", node)
 
 }

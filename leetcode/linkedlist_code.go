@@ -59,13 +59,15 @@ func partition(head *ListNode, x int) *ListNode {
 	return dummy1.Next
 }
 
-// 19
+// 19 双指针法 假设链表长度为k,到达倒数第n个节点需要走k-n步
 func removeNthFromEnd(head *ListNode, n int) *ListNode {
+	// p1先走n步
 	p1 := head
 	for i := 0; i < n; i++ {
 		p1 = p1.Next
 	}
 
+	// p2从头开始走 k-n步
 	p2 := head
 	dummy := &ListNode{}
 	p := dummy
@@ -116,7 +118,7 @@ func middleNode(head *ListNode) *ListNode {
 	return slow
 }
 
-// 141
+// 141快慢指针相遇即为有环
 func hasCycle(head *ListNode) bool {
 
 	slow := head
@@ -152,6 +154,9 @@ func detectCycle(head *ListNode) *ListNode {
 		return nil
 	}
 
+	// 假设相遇点为m(必然在环中),慢指针走了k步,快指针必然走了2k步,则k是环的长度
+	// 此时从慢指针重新走头节点出发走k-m步,快指针每次走一步也从相遇点出发,再次相遇必然就是环的起点
+
 	slow = head
 	for slow != fast {
 		slow = slow.Next
@@ -160,7 +165,9 @@ func detectCycle(head *ListNode) *ListNode {
 	return slow
 }
 
-// 160
+// 160 获取相交节点,假设x为相交的链表部分
+// 则整合为一个链表后为 A + x + B = B + x + A
+// 即对于2个指针,分别遍历完整合后的链表只要相等必然相交
 func getIntersectionNode(headA, headB *ListNode) *ListNode {
 
 	p1, p2 := headA, headB
@@ -200,7 +207,7 @@ func reverseList2(head *ListNode) *ListNode {
 		prev = cur
 		cur = n
 	}
-	return cur
+	return prev
 }
 
 // 使用+1的方式计数需要多传递一个变量
@@ -236,9 +243,10 @@ func reverseN(head *ListNode, n int) *ListNode {
 
 func reverseBetween(head *ListNode, m int, n int) *ListNode {
 	if m == 1 {
+		//此时的n即为n-m+1,即为反转前n个节点
 		return reverseN(head, n)
 	}
-	head.Next = reverseBetween(head.Next, m-1, n)
+	head.Next = reverseBetween(head.Next, m-1, n-1)
 	return head
 }
 

@@ -279,3 +279,41 @@ func reverseKGroup(head *ListNode, k int) *ListNode {
 	a.Next = reverseKGroup(b, k)
 	return n
 }
+
+// 83 删除排序链表中的重复元素
+// 有序的链表,重复的元素必然是相连的
+func deleteDuplicates(head *ListNode) *ListNode {
+
+	if head == nil || head.Next == nil {
+		return head
+	}
+
+	slow, fast := head, head
+	for fast != nil {
+		if slow.Val != fast.Val {
+			slow = slow.Next
+			slow.Val = fast.Val
+		}
+		fast = fast.Next
+	}
+	slow.Next = nil
+	return head
+}
+
+func deleteDuplicates2(head *ListNode) *ListNode {
+	if head == nil || head.Next == nil {
+		return head
+	}
+
+	slow, fast := head, head
+	for fast != nil {
+		if slow.Val != fast.Val {
+			// 直接把slow.next指向当前节点
+			slow.Next = fast
+			slow = slow.Next
+		}
+		fast = fast.Next
+	}
+	slow.Next = nil
+	return head
+}

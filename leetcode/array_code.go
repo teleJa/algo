@@ -99,6 +99,7 @@ func reverseString(s []byte) {
 // 125 判断是否为回文串
 func isPalindrome(s string) bool {
 
+	// 去除非数字和字母的部分
 	compile, _ := regexp.Compile("[^a-zA-Z0-9]+")
 	s = compile.ReplaceAllString(s, "")
 
@@ -113,4 +114,56 @@ func isPalindrome(s string) bool {
 	}
 	return true
 
+}
+
+// 5 最长回文子串 (耗时较长,无法ac)
+func longestPalindrome2(s string) string {
+	if len(s) < 2 {
+		return s
+	}
+
+	var res string
+	left, right := 0, 1
+	for left < len(s) {
+		for right <= len(s) {
+			sub := s[left:right]
+			if isPalindrome(sub) && len(sub) > len(res) {
+				res = sub
+			}
+			right++
+		}
+		left++
+		right = left
+	}
+	return res
+}
+
+// 5 最长回文子串
+func longestPalindrome(s string) string {
+
+	var res string
+	for i := 0; i < len(s); i++ {
+		odd := findPalindrome(s, i, i)
+		even := findPalindrome(s, i, i+1)
+
+		if len(odd) > len(res) {
+			res = odd
+		}
+
+		if len(even) > len(res) {
+			res = even
+		}
+
+	}
+	return res
+}
+
+// 从中心向两边的双指针
+func findPalindrome(s string, left, right int) string {
+
+	for left >= 0 && right < len(s) && strings.EqualFold(string(s[left]), string(s[right])) {
+		left--
+		right++
+	}
+	return s[left+1 : right]
 }

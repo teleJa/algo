@@ -29,3 +29,17 @@ func TestFilterLetterAndNumber(t *testing.T) {
 	t.Log(strings.EqualFold(string(s[0]), string(s[1])))
 
 }
+
+func TestLongestPalindrome(t *testing.T) {
+
+	t.Log(longestPalindrome2("b"))
+	t.Log(longestPalindrome2("bb"))
+	t.Log(longestPalindrome2("cbbd"))
+
+	t.Log(longestPalindrome("b"))
+	t.Log(longestPalindrome("bb"))
+	t.Log(longestPalindrome("cbbd"))
+
+	t.Log(findPalindrome("cbbd", 1, 2))
+
+}

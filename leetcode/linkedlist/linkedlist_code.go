@@ -106,7 +106,7 @@ func FindLastNode(head *ListNode, n int) *ListNode {
 	return p2
 }
 
-// 876
+// 876 寻找中间节点
 func middleNode(head *ListNode) *ListNode {
 
 	slow := head
@@ -316,4 +316,29 @@ func deleteDuplicates2(head *ListNode) *ListNode {
 	}
 	slow.Next = nil
 	return head
+}
+
+// 234 回文链表
+func isPalindrome(head *ListNode) bool {
+
+	// 复制链表
+	dummy := &ListNode{}
+	p := dummy
+	h0 := head
+	for h0 != nil {
+		p.Next = &ListNode{Val: h0.Val}
+		h0 = h0.Next
+		p = p.Next
+	}
+
+	newHead := reverseList(head)
+	h := dummy.Next
+	for h != nil {
+		if h.Val != newHead.Val {
+			return false
+		}
+		h = h.Next
+		newHead = newHead.Next
+	}
+	return true
 }

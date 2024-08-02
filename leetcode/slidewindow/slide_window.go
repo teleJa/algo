@@ -28,14 +28,12 @@ func minWindow(s string, t string) string {
 				res = sub
 			}
 
-			if _, exist := window[rune(s[left])]; !exist {
-				left++
-				continue
-			}
-
+			c := s[left]
 			// 缩小窗口
-			window[rune(s[left])]--
 			left++
+			if _, exist := window[rune(c)]; exist {
+				window[rune(c)]--
+			}
 			// 比较是否仍满足
 			match = matchWindow(need, window)
 

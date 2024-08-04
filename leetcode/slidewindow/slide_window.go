@@ -99,3 +99,45 @@ func checkInclusion(s1 string, s2 string) bool {
 	}
 	return false
 }
+
+// 438
+func findAnagrams(s string, p string) []int {
+	need := make(map[rune]int)
+	window := make(map[rune]int)
+	for _, p0 := range p {
+		need[p0]++
+	}
+
+	left, right := 0, 0
+	valid := 0
+	var res []int
+	for right < len(s) {
+		r := rune(s[right])
+		right++
+		if _, exist := need[r]; exist {
+			window[r]++
+			if window[r] == need[r] {
+				valid++
+			}
+		}
+
+		for right-left >= len(p) {
+
+			if valid == len(need) {
+				res = append(res, left)
+			}
+
+			l := rune(s[left])
+			left++
+			if _, exist := window[l]; exist {
+				if window[l] == need[l] {
+					valid--
+				}
+				window[l]--
+			}
+
+		}
+
+	}
+	return res
+}

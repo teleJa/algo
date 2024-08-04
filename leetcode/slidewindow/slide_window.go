@@ -55,3 +55,47 @@ func matchWindow(need, window map[rune]int) bool {
 	}
 	return true
 }
+
+// 567 s2是否包含s1的排列
+func checkInclusion(s1 string, s2 string) bool {
+
+	need := make(map[rune]int)
+	window := make(map[rune]int)
+
+	for _, s := range s1 {
+		need[s] += 1
+	}
+
+	valid := 0
+	left, right := 0, 0
+	for right < len(s2) {
+		r := rune(s2[right])
+		right++
+
+		if _, exist := need[r]; exist {
+			window[r]++
+			if window[r] == need[r] {
+				valid++
+			}
+		}
+
+		// 缩小窗口(保证窗口内的字符都是s1的)
+		for right-left >= len(s1) {
+
+			if valid == len(need) {
+				return true
+			}
+
+			l := rune(s2[left])
+			left++
+			if _, exist := need[l]; exist {
+				if window[l] == need[l] {
+					valid--
+				}
+				window[l]--
+			}
+		}
+
+	}
+	return false
+}

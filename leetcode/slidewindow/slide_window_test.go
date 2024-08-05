@@ -130,3 +130,10 @@ func Test_findAnagrams(t *testing.T) {
 		})
 	}
 }
+
+func TestLengthOfLongestSubstring(t *testing.T) {
+
+	s := "tmmzuxt"
+	t.Log(lengthOfLongestSubstring(s))
+
+}

@@ -79,3 +79,43 @@ func rightBound(nums []int, target int) int {
 	// 未找到返回-1,也可以返回right
 	return -1
 }
+
+// 34 寻找target的第一个和最后一个位置
+func searchRange(nums []int, target int) []int {
+
+	res := []int{-1, -1}
+
+	// 搜索左边界
+	left, right := 0, len(nums)-1
+	for left <= right {
+		mid := left + (right-left)/2
+		if nums[mid] == target {
+			right = mid - 1
+		} else if nums[mid] > target {
+			right = mid - 1
+		} else if nums[mid] < target {
+			left = mid + 1
+		}
+	}
+
+	if left >= 0 && left < len(nums) && nums[left] == target {
+		res[0] = left
+	}
+	// 搜索右边界
+	left, right = 0, len(nums)-1
+	for left <= right {
+		mid := left + (right-left)/2
+		if nums[mid] == target {
+			left = mid + 1
+		} else if nums[mid] < target {
+			left = mid + 1
+		} else if nums[mid] > target {
+			right = mid - 1
+		}
+	}
+
+	if right >= 0 && right < len(nums) && nums[right] == target {
+		res[1] = right
+	}
+	return res
+}

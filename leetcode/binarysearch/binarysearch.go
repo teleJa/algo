@@ -119,3 +119,32 @@ func searchRange(nums []int, target int) []int {
 	}
 	return res
 }
+
+// 875 吃香蕉
+func minEatingSpeed(piles []int, h int) int {
+
+	left, right := 1, 1000000000
+	for left <= right {
+		mid := left + (right-left)/2
+		if f(piles, mid) == int64(h) {
+			right = mid - 1
+		} else if f(piles, mid) > int64(h) {
+			left = mid + 1
+		} else if f(piles, mid) < int64(h) {
+			right = mid - 1
+		}
+	}
+
+	return left
+}
+
+func f(piles []int, x int) (h int64) {
+
+	for _, i := range piles {
+		h += int64(i / x)
+		if i%x > 0 {
+			h++
+		}
+	}
+	return
+}

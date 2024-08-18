@@ -148,3 +148,43 @@ func f(piles []int, x int) (h int64) {
 	}
 	return
 }
+
+// 1011
+func shipWithinDays(weights []int, days int) int {
+	var left, right int
+	for i := range weights {
+		if weights[i] > left {
+			left = weights[i]
+		}
+		right += weights[i]
+	}
+
+	for left <= right {
+		mid := left + (right-left)/2
+		if fnDays(weights, mid) == days {
+			right = mid - 1
+		} else if fnDays(weights, mid) > days {
+			left = mid + 1
+		} else if fnDays(weights, mid) < days {
+			right = mid - 1
+		}
+	}
+	return left
+}
+
+func fnDays(weights []int, x int) (days int) {
+	for i := 0; i < len(weights); {
+		cap := x
+		for i < len(weights) {
+			if cap < weights[i] {
+				break
+			} else {
+				cap -= weights[i]
+			}
+			i++
+		}
+		days++
+
+	}
+	return
+}

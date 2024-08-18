@@ -83,3 +83,50 @@ func Test_minEatingSpeed(t *testing.T) {
 		})
 	}
 }
+
+func Test_shipWithinDays(t *testing.T) {
+	type args struct {
+		weights []int
+		days    int
+	}
+
+	tests := []struct {
+		name string
+		args args
+		want int
+	}{
+		{"case1", args{[]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, 5}, 15},
+		{"case2", args{[]int{3, 2, 2, 4, 1, 4}, 3}, 6},
+		{"case3", args{[]int{1, 2, 3, 1, 1}, 4}, 3},
+	}
+
+	for _, t0 := range tests {
+		if w := shipWithinDays(t0.args.weights, t0.args.days); w != t0.want {
+			t.Errorf("%s fail,w=%d,want=%d", t0.name, w, t0.want)
+		}
+	}
+
+}
+
+func Test_fnDays(t *testing.T) {
+	type args struct {
+		weights []int
+		x       int
+	}
+	tests := []struct {
+		name     string
+		args     args
+		wantDays int
+	}{
+		{"case1", args{[]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, 14}, 5},
+		{"case2", args{[]int{3, 2, 2, 4, 1, 4}, 6}, 3},
+		{"case3", args{[]int{1, 2, 3, 1, 1}, 3}, 4},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if gotDays := fnDays(tt.args.weights, tt.args.x); gotDays != tt.wantDays {
+				t.Errorf("fnDays() = %v, want %v", gotDays, tt.wantDays)
+			}
+		})
+	}
+}

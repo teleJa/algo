@@ -188,3 +188,8 @@ func fnDays(weights []int, x int) (days int) {
 	}
 	return
 }
+
+// 410 分隔数组的最大值
+func splitArray(nums []int, k int) int {
+	return shipWithinDays(nums, k)
+}

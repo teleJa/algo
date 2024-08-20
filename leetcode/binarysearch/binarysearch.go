@@ -193,3 +193,36 @@ func fnDays(weights []int, x int) (days int) {
 func splitArray(nums []int, k int) int {
 	return shipWithinDays(nums, k)
 }
+
+// 二维数组的二分搜索
+// 二维数组的元素坐标可以抽象为一维数组坐标
+// m行n列的二维数组,任意元素(i,j),展开为一维数组后坐标为 (i * n) + j
+// 一维下标index也可以转换为二维坐标 (index/n,index % n)
+
+// 74 搜索二维矩阵
+func searchMatrix(matrix [][]int, target int) bool {
+
+	m := len(matrix)
+	n := len(matrix[m-1])
+
+	left, right := 0, (m-1)*n+n-1
+
+	for left <= right {
+		mid := left + (right-left)/2
+		if fnMatrix(matrix, mid) == target {
+			return true
+		} else if fnMatrix(matrix, mid) < target {
+			left = mid + 1
+		} else if fnMatrix(matrix, mid) > target {
+			right = mid - 1
+		}
+
+	}
+	return false
+}
+
+func fnMatrix(matrix [][]int, mid int) int {
+	m := len(matrix)
+	n := len(matrix[m-1])
+	return matrix[mid/n][mid%n]
+}

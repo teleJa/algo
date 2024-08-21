@@ -249,5 +249,31 @@ func searchMatrix240(matrix [][]int, target int) bool {
 		}
 	}
 	return false
-
 }
+
+// 566 重塑矩阵
+// 展开为一维数组进行坐标映射即可
+func matrixReshape(mat [][]int, r int, c int) [][]int {
+
+	m := len(mat)
+	n := len(mat[0])
+
+	if r*c != m*n {
+		return mat
+	}
+	res := make([][]int, r)
+	for i := 0; i < r; i++ {
+		res[i] = make([]int, c)
+		// 填充元素
+		for j := 0; j < len(res[i]); j++ {
+			// 一维数组下标
+			index := i*c + j
+			res[i][j] = mat[index/n][index%n]
+		}
+	}
+	return res
+}
+
+// 1,2     1,2,3
+// 3,4  -> 4,5,6
+// 5,6

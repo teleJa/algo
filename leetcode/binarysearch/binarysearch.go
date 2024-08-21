@@ -200,6 +200,8 @@ func splitArray(nums []int, k int) int {
 // 一维下标index也可以转换为二维坐标 (index/n,index % n)
 
 // 74 搜索二维矩阵
+// 每行中的整数从左到右按非严格递增顺序排列。
+// 每行的第一个整数大于前一行的最后一个整数。
 func searchMatrix(matrix [][]int, target int) bool {
 
 	m := len(matrix)
@@ -225,4 +227,27 @@ func fnMatrix(matrix [][]int, mid int) int {
 	m := len(matrix)
 	n := len(matrix[m-1])
 	return matrix[mid/n][mid%n]
+}
+
+// 240. 搜索二维矩阵 II
+// 每行的元素从左到右升序排列
+// 每列的元素从上到下升序排列
+// 从右上角开始搜索,向左移动数据变小,向下移动数据变大
+// 也可以从左下角开始搜索
+func searchMatrix240(matrix [][]int, target int) bool {
+	m := len(matrix) - 1
+	n := len(matrix[0]) - 1
+
+	i, j := 0, n
+	for i <= m && j >= 0 {
+		if matrix[i][j] == target {
+			return true
+		} else if matrix[i][j] < target {
+			i++
+		} else if matrix[i][j] > target {
+			j--
+		}
+	}
+	return false
+
 }

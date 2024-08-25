@@ -251,6 +251,26 @@ func searchMatrix240(matrix [][]int, target int) bool {
 	return false
 }
 
+// LCR 121. 寻找目标值 - 二维数组(同上)
+func findTargetIn2DPlants(plants [][]int, target int) bool {
+	if len(plants) == 0 {
+		return false
+	}
+	m, n := 0, len(plants[0])-1
+	// 从左下角开始搜索
+	i, j := len(plants)-1, 0
+	for i >= m && j <= n {
+		if plants[i][j] == target {
+			return true
+		} else if plants[i][j] < target {
+			j++
+		} else if plants[i][j] > target {
+			i--
+		}
+	}
+	return false
+}
+
 // 566 重塑矩阵
 // 展开为一维数组进行坐标映射即可
 func matrixReshape(mat [][]int, r int, c int) [][]int {
@@ -274,6 +294,46 @@ func matrixReshape(mat [][]int, r int, c int) [][]int {
 	return res
 }
 
-// 1,2     1,2,3
-// 3,4  -> 4,5,6
-// 5,6
+// 658 找到k个最接近的元素
+func findClosestElements(arr []int, k int, x int) []int {
+
+	// 取前k个
+	if x < arr[0] {
+		return arr[0:k]
+	}
+
+	// 取倒数k个
+	if x > arr[len(arr)-1] {
+		return arr[len(arr)-k:]
+	}
+
+	// 寻找左侧边界
+	left, right := 0, len(arr)-1
+	for left <= right {
+		mid := left + (right-left)/2
+		if arr[mid] == x {
+			right = mid - 1
+		} else if arr[mid] > x {
+			right = mid - 1
+		} else if arr[mid] < x {
+			left = mid + 1
+		}
+	}
+
+	l0, r0 := left-1, left
+	//在长度为k的窗口内搜索
+	for ; k > 0; k-- {
+		if l0 < 0 {
+			r0++
+		} else if r0 >= len(arr) {
+			l0--
+		} else if x-arr[l0] <= arr[r0]-x {
+			l0--
+		} else {
+			r0++
+		}
+	}
+
+	return arr[l0+1 : r0]
+
+}

@@ -337,3 +337,21 @@ func findClosestElements(arr []int, k int, x int) []int {
 	return arr[l0+1 : r0]
 
 }
+
+// 162 寻找峰值
+func findPeakElement(nums []int) int {
+
+	left, right := 0, len(nums)-1
+	// 题目必然有解,此时left==right可作为退出条件
+	for left < right {
+		mid := left + (right-left)/2
+		if nums[mid] > nums[mid+1] {
+			// 左侧存在峰值
+			// 开区间搜索
+			right = mid
+		} else {
+			left = mid + 1
+		}
+	}
+	return left
+}

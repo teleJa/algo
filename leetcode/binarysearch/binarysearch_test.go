@@ -214,3 +214,24 @@ func Test_findClosestElements(t *testing.T) {
 		})
 	}
 }
+
+func Test_countTarget(t *testing.T) {
+	type args struct {
+		scores []int
+		target int
+	}
+	tests := []struct {
+		name string
+		args args
+		want int
+	}{
+		{"case1", args{[]int{2, 2, 3, 4, 4, 4, 5, 6, 6, 8}, 4}, 3},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := countTarget(tt.args.scores, tt.args.target); got != tt.want {
+				t.Errorf("countTarget() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

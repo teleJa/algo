@@ -355,3 +355,48 @@ func findPeakElement(nums []int) int {
 	}
 	return left
 }
+
+// LCR 069. 山脉数组的峰顶索引
+func peakIndexInMountainArray(arr []int) int {
+
+	left, right := 0, len(arr)
+	for left < right {
+		mid := left + (right-left)/2
+		if arr[mid] > arr[mid+1] {
+			right = mid
+		} else {
+			left = mid + 1
+		}
+	}
+	return left
+}
+
+// LCR 172. 统计目标成绩的出现次数
+func countTarget(scores []int, target int) int {
+
+	left, right := 0, len(scores)-1
+	for left <= right {
+		mid := left + (right-left)/2
+		if scores[mid] == target {
+			right = mid - 1
+		} else if scores[mid] > target {
+			right = mid - 1
+		} else if scores[mid] < target {
+			left = mid + 1
+		}
+	}
+
+	size := 0
+	if left < 0 || left > len(scores) {
+		return size
+	}
+
+	for left < len(scores) {
+		if scores[left] != target {
+			break
+		}
+		size++
+		left++
+	}
+	return size
+}

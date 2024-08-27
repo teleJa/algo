@@ -235,3 +235,23 @@ func Test_countTarget(t *testing.T) {
 		})
 	}
 }
+
+func Test_takeAttendance(t *testing.T) {
+	type args struct {
+		records []int
+	}
+	tests := []struct {
+		name string
+		args args
+		want int
+	}{
+		{"case1", args{[]int{1, 2, 3}}, 0},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := takeAttendance(tt.args.records); got != tt.want {
+				t.Errorf("takeAttendance() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

@@ -400,3 +400,33 @@ func countTarget(scores []int, target int) int {
 	}
 	return size
 }
+
+// LCR 173. 点名
+func takeAttendance2(records []int) int {
+
+	for i := 0; i < len(records); i++ {
+		if records[i] != i {
+			return i
+		}
+	}
+	return len(records)
+}
+
+// LCR 173. 点名
+// 二分
+func takeAttendance(records []int) int {
+
+	left, right := 0, len(records)-1
+	for left <= right {
+		mid := left + (right-left)/2
+		if records[mid] == mid {
+			left++
+		} else if records[mid] > mid {
+			// 左区间缺失元素
+			right = mid - 1
+		} else if records[mid] < mid {
+			left = mid + 1
+		}
+	}
+	return left
+}

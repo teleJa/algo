@@ -255,3 +255,47 @@ func Test_takeAttendance(t *testing.T) {
 		})
 	}
 }
+
+func Test_search33(t *testing.T) {
+	type args struct {
+		nums   []int
+		target int
+	}
+	tests := []struct {
+		name string
+		args args
+		want int
+	}{
+		{"case1", args{[]int{4, 5, 6, 7, 0, 1, 2}, 0}, 4},
+		{"case2", args{[]int{4, 5, 6, 7, 0, 1, 2}, 3}, -1},
+		{"case3", args{[]int{3, 1}, 1}, 1},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := search33(tt.args.nums, tt.args.target); got != tt.want {
+				t.Errorf("search33() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_search81(t *testing.T) {
+	type args struct {
+		nums   []int
+		target int
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{"case1", args{[]int{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1}, 2}, true},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := search81(tt.args.nums, tt.args.target); got != tt.want {
+				t.Errorf("search81() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

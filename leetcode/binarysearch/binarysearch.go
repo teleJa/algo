@@ -430,3 +430,112 @@ func takeAttendance(records []int) int {
 	}
 	return left
 }
+
+func takeAttendance3(records []int) int {
+
+	left, right := 0, len(records)-1
+	for left <= right {
+		mid := left + (right-left)/2
+		if records[mid] > mid {
+			// 左区间缺失元素
+			right = mid - 1
+		} else {
+			// 右区间缺失元素
+			left = mid + 1
+		}
+	}
+	return left
+}
+
+// 33. 搜索旋转排序数组
+func search33(nums []int, target int) int {
+
+	fn := func(nums []int, left, right int) int {
+		for left <= right {
+			mid := left + (right-left)/2
+			if nums[mid] == target {
+				return mid
+			} else if nums[mid] > target {
+				right = mid - 1
+			} else if nums[mid] < target {
+				left = mid + 1
+			}
+		}
+
+		if left >= len(nums) || nums[left] != target {
+			return -1
+		}
+		return left
+	}
+
+	left, right := 0, len(nums)-1
+	for left <= right {
+		mid := left + (right-left)/2
+		if nums[mid] == target {
+			return mid
+		} else if nums[mid] >= nums[left] { // mid在左侧区间
+			if nums[left] <= target && target <= nums[mid] {
+				return fn(nums, left, mid)
+			}
+			left = mid + 1 // 继续向右侧搜索
+		} else {
+			// mid在右侧区间
+			if nums[mid] <= target && target <= nums[right] {
+				return fn(nums, mid, right)
+			}
+			right = mid - 1
+		}
+	}
+	return -1
+}
+
+// 81
+func search81(nums []int, target int) bool {
+	fnSe := func(left, right int) int {
+		for left <= right {
+			mid := left + (right-left)/2
+			if nums[mid] == target {
+				return mid
+			} else if nums[mid] > target {
+				right = mid - 1
+			} else if nums[mid] < target {
+				left = mid + 1
+			}
+		}
+		if left >= len(nums) || nums[left] != target {
+			return -1
+		}
+		return left
+	}
+
+	left, right := 0, len(nums)-1
+	for left <= right {
+		// 去除重复元素
+		for left < right && nums[left] == nums[left+1] {
+			left++
+		}
+
+		for left < right && nums[right] == nums[right-1] {
+			right--
+		}
+
+		// 同33
+		mid := left + (right-left)/2
+		if nums[mid] == target {
+			return true
+		} else if nums[mid] >= nums[left] {
+			if nums[left] <= target && target <= nums[mid] {
+				return fnSe(left, mid) != -1
+			}
+			left = mid + 1
+		} else {
+			if nums[mid] <= target && target <= nums[right] {
+				return fnSe(mid, right) != -1
+			}
+			right = mid - 1
+		}
+
+	}
+
+	return false
+}

@@ -190,6 +190,8 @@ func fnDays(weights []int, x int) (days int) {
 }
 
 // 410 分隔数组的最大值
+// 给定一个非负整数数组 nums 和一个整数 k ，你需要将这个数组分成 k 个非空的连续子数组。
+// 设计一个算法使得这 k 个子数组各自和的最大值最小。
 func splitArray(nums []int, k int) int {
 	return shipWithinDays(nums, k)
 }
@@ -339,6 +341,8 @@ func findClosestElements(arr []int, k int, x int) []int {
 }
 
 // 162 寻找峰值
+// 峰值元素是指其值严格大于左右相邻值的元素。
+// 同852
 func findPeakElement(nums []int) int {
 
 	left, right := 0, len(nums)-1

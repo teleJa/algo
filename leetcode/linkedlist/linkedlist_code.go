@@ -342,3 +342,28 @@ func isPalindrome(head *ListNode) bool {
 	}
 	return true
 }
+
+// 88. 合并两个有序数组
+func merge(nums1 []int, m int, nums2 []int, n int) {
+
+	// 从后向前合并(nums1数组后面是空的)
+	m0, n0 := m-1, n-1
+	p := m + n - 1
+	for m0 >= 0 && n0 >= 0 {
+		if nums1[m0] < nums2[n0] {
+			nums1[p] = nums2[n0]
+			n0--
+		} else {
+			nums1[p] = nums1[m0]
+			m0--
+		}
+		p--
+	}
+
+	// 判断num2是否遍历完成
+	for n0 >= 0 {
+		nums1[p] = nums2[n0]
+		n0--
+		p--
+	}
+}

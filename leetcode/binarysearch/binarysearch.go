@@ -452,6 +452,7 @@ func takeAttendance3(records []int) int {
 }
 
 // 33. 搜索旋转排序数组
+// 排序的数组旋转后相当于形成了1个断崖
 func search33(nums []int, target int) int {
 
 	fn := func(nums []int, left, right int) int {
@@ -493,7 +494,8 @@ func search33(nums []int, target int) int {
 	return -1
 }
 
-// 81
+// 81 搜索排序数组2
+// 此时数组中存在元素相同的场景
 func search81(nums []int, target int) bool {
 	fnSe := func(left, right int) int {
 		for left <= right {

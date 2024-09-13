@@ -1,5 +1,7 @@
 package linkedlist
 
+import "math"
+
 type ListNode struct {
 	Val  int
 	Next *ListNode
@@ -366,4 +368,77 @@ func merge(nums1 []int, m int, nums2 []int, n int) {
 		n0--
 		p--
 	}
+}
+
+// 977. 有序数组的平方
+// nums中可能存在负数,平方后变成正数
+func sortedSquares(nums []int) []int {
+
+	// m0 代表左侧小于0数据 n0代表右侧大于0数据
+	m0, n0 := 0, 0
+	for i := range nums {
+		if nums[i] >= 0 {
+			n0 = i
+			break
+		} else {
+			n0++
+		}
+	}
+
+	m0 = n0 - 1
+	res := make([]int, len(nums))
+	index := 0
+	// 合并数组
+	for m0 > -1 && n0 < len(nums) {
+		abs := math.Abs(float64(nums[m0]))
+		if abs < float64(nums[n0]) {
+			res[index] = int(abs)
+			m0--
+		} else {
+			res[index] = nums[n0]
+			n0++
+		}
+		index++
+	}
+
+	for m0 > -1 {
+		abs := math.Abs(float64(nums[m0]))
+		res[index] = int(abs)
+		m0--
+		index++
+	}
+
+	for n0 < len(nums) {
+		res[index] = nums[n0]
+		n0++
+		index++
+	}
+
+	for i := range res {
+		res[i] = res[i] * res[i]
+	}
+	return res
+
+}
+
+// 双指针初始化在数组的尾部,从绝对值来看,左侧负数子数组从左向右是递减,右侧正数子数组从右向左也是递减(v字形)
+func sortedSquares2(nums []int) []int {
+
+	// 此时left,right 代表2个子数组绝对值最大的索引
+	left, right := 0, len(nums)-1
+	res := make([]int, len(nums))
+	p := len(nums) - 1
+	for left <= right {
+		l := math.Abs(float64(nums[left]))
+		r := math.Abs(float64(nums[right]))
+		if l > r {
+			res[p] = int(l) * int(l)
+			left++
+		} else {
+			res[p] = int(r) * int(r)
+			right--
+		}
+		p--
+	}
+	return res
 }

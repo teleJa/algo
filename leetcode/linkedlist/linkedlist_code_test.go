@@ -166,3 +166,27 @@ func Test_sortedSquares(t *testing.T) {
 		})
 	}
 }
+
+func Test_sortTransformedArray(t *testing.T) {
+	type args struct {
+		nums []int
+		a    int
+		b    int
+		c    int
+	}
+	tests := []struct {
+		name string
+		args args
+		want []int
+	}{
+		{"case1", args{[]int{-4, -2, 2, 4}, 1, 3, 5}, []int{3, 9, 15, 33}},
+		{"case2", args{[]int{-4, -2, 2, 4}, -1, 3, 5}, []int{-23, -5, 1, 7}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := sortTransformedArray(tt.args.nums, tt.args.a, tt.args.b, tt.args.c); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("sortTransformedArray() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

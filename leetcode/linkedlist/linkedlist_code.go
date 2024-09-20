@@ -442,3 +442,51 @@ func sortedSquares2(nums []int) []int {
 	}
 	return res
 }
+
+// 360 有序转化数组
+// 给你一个已经 排好序 的整数数组 nums 和整数 a 、 b 、 c 。对于数组中的每一个元素 nums[i] ，计算函数值 f(x) = ax2 + bx + c ，请 按升序返回数组 。
+// 此函数为抛物线,a > 0 开口向上, a < 0 开口向下
+// a=0的时候考虑 b的情况 b > 0,f(x)逐渐递增(退化为开口向下抛物线的左侧), b <0 ,f(x)逐渐递减(退化为开口向下抛物线的右侧),因此 a=0应归为抛物线开口向下的情况
+func sortTransformedArray(nums []int, a, b, c int) []int {
+
+	left, right := 0, len(nums)-1
+	p := 0
+	if a > 0 {
+		p = right
+	}
+
+	fn := func(x, a, b, c int) int {
+		return a*x*x + b*x + c
+	}
+
+	res := make([]int, len(nums))
+	for left <= right {
+
+		l0 := fn(nums[left], a, b, c)
+		r0 := fn(nums[right], a, b, c)
+		// 开口向上,两边向中心递减
+		if a > 0 {
+			if l0 > r0 {
+				res[p] = l0
+				p--
+				left++
+			} else {
+				res[p] = r0
+				p--
+				right--
+			}
+		} else {
+			if l0 > r0 {
+				res[p] = r0
+				right--
+				p++
+			} else {
+				res[p] = l0
+				left++
+				p++
+			}
+		}
+
+	}
+	return res
+}

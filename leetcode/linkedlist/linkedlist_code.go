@@ -503,13 +503,7 @@ func diagonalSort(mat [][]int) [][]int {
 		arr := mat[i]
 		for j := range arr {
 			c := j - i
-			sameDiagonal, ok := m[c]
-			if !ok {
-				sameDiagonal = make([]int, 0)
-				m[c] = sameDiagonal
-			}
-			sameDiagonal = append(sameDiagonal, mat[i][j])
-			m[c] = sameDiagonal
+			m[c] = append(m[c], mat[i][j])
 		}
 	}
 
@@ -522,11 +516,8 @@ func diagonalSort(mat [][]int) [][]int {
 		arr := mat[i]
 		for j := range arr {
 			c := j - i
-			diagonal := m[c]
-			mat[i][j] = diagonal[0]
-			// 移除元素
-			diagonal = append(diagonal[1:])
-			m[c] = diagonal
+			mat[i][j] = m[c][0]
+			m[c] = append(m[c][1:])
 		}
 	}
 	return mat

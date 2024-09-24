@@ -1,6 +1,9 @@
 package linkedlist
 
-import "math"
+import (
+	"math"
+	"sort"
+)
 
 type ListNode struct {
 	Val  int
@@ -489,4 +492,42 @@ func sortTransformedArray(nums []int, a, b, c int) []int {
 
 	}
 	return res
+}
+
+// 1329. 将矩阵按对角线排序
+// 同一对角线上的元素,横纵坐标的差相同
+func diagonalSort(mat [][]int) [][]int {
+
+	m := make(map[int][]int)
+	for i := range mat {
+		arr := mat[i]
+		for j := range arr {
+			c := j - i
+			sameDiagonal, ok := m[c]
+			if !ok {
+				sameDiagonal = make([]int, 0)
+				m[c] = sameDiagonal
+			}
+			sameDiagonal = append(sameDiagonal, mat[i][j])
+			m[c] = sameDiagonal
+		}
+	}
+
+	// 排序
+	for _, v := range m {
+		sort.Ints(v)
+	}
+
+	for i := range mat {
+		arr := mat[i]
+		for j := range arr {
+			c := j - i
+			diagonal := m[c]
+			mat[i][j] = diagonal[0]
+			// 移除元素
+			diagonal = append(diagonal[1:])
+			m[c] = diagonal
+		}
+	}
+	return mat
 }

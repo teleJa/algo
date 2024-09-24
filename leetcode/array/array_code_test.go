@@ -43,3 +43,10 @@ func TestLongestPalindrome(t *testing.T) {
 	t.Log(findPalindrome("cbbd", 1, 2))
 
 }
+
+func TestRemoveSliceFirst(t *testing.T) {
+
+	arr := []int{1, 2, 3, 4, 5}
+	arr = append(arr[1:])
+	log.Println(arr)
+}

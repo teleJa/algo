@@ -390,3 +390,30 @@ func reverseWords(s string) string {
 	return strings.Join(res, " ")
 
 }
+
+// 48 旋转图像 n*n的矩阵
+func rotate(matrix [][]int) {
+
+	n := len(matrix)
+
+	// 先按照左对角线把值翻转
+	for i := 0; i < n; i++ {
+		// 注意此处j=i,j的第一个值是在对角线上
+		for j := i; j < n; j++ {
+			matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
+		}
+	}
+
+	// 反转每一行
+	for i := range matrix {
+		row := matrix[i]
+
+		left, right := 0, len(row)-1
+		for left <= right {
+			row[left], row[right] = row[right], row[left]
+			left++
+			right--
+		}
+		matrix[i] = row
+	}
+}

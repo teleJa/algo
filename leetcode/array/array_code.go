@@ -3,6 +3,7 @@ package array
 import (
 	"math"
 	"regexp"
+	"slices"
 	"sort"
 	"strings"
 )
@@ -369,5 +370,23 @@ func shiftGrid(grid [][]int, k int) [][]int {
 	}
 
 	return grid
+
+}
+
+// 151 反转字符串中的单词
+func reverseWords(s string) string {
+
+	split := strings.Split(s, " ")
+	var res []string
+	for i := range split {
+		t := strings.TrimSpace(split[i])
+		if t != "" {
+			res = append(res, t)
+		}
+	}
+
+	slices.Reverse(res)
+
+	return strings.Join(res, " ")
 
 }

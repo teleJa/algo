@@ -115,3 +115,30 @@ func TestRotate(t *testing.T) {
 	}
 	log.Println(target)
 }
+
+func TestJoin(t *testing.T) {
+
+	split := []string{"hello", "world"}
+	t.Log(strings.Join(split, "!"))
+
+}
+
+func Test_reverseWords(t *testing.T) {
+	type args struct {
+		s string
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{"case1", args{"hello world"}, "world hello"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := reverseWords(tt.args.s); got != tt.want {
+				t.Errorf("reverseWords() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

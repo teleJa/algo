@@ -342,3 +342,29 @@ func isPalindrome(head *ListNode) bool {
 	}
 	return true
 }
+
+// 61 旋转链表
+func rotateRight(head *ListNode, k int) *ListNode {
+
+	var res []*ListNode
+	for head != nil {
+		n := head.Next
+		res = append(res, head)
+		head.Next = nil
+		head = n
+	}
+
+	target := make([]*ListNode, len(res))
+	for i := range res {
+		target[(i+k)%len(res)] = res[i]
+	}
+
+	// 重新组装成链表
+	dual := &ListNode{}
+	h := dual
+	for i := range target {
+		h.Next = target[i]
+		h = h.Next
+	}
+	return dual.Next
+}

@@ -417,3 +417,56 @@ func rotate(matrix [][]int) {
 		matrix[i] = row
 	}
 }
+
+// 54 螺旋矩阵
+func spiralOrder(matrix [][]int) []int {
+
+	m := len(matrix)
+	n := len(matrix[0])
+	// 左上
+	upper_bound := 0
+	// 右上
+	right_bound := n - 1
+	// 右下
+	lower_bound := m - 1
+	// 左下
+	left_bound := 0
+
+	var res []int
+	for len(res) < m*n {
+
+		if upper_bound <= lower_bound {
+			// 从右向左遍历
+			for i := left_bound; i <= right_bound; i++ {
+				res = append(res, matrix[upper_bound][i])
+			}
+			upper_bound++
+		}
+
+		// 向下遍历
+		if left_bound <= right_bound {
+			for i := upper_bound; i <= lower_bound; i++ {
+				res = append(res, matrix[i][right_bound])
+			}
+			right_bound--
+		}
+
+		// 向左遍历
+		if upper_bound <= lower_bound {
+			for i := right_bound; i >= left_bound; i-- {
+				res = append(res, matrix[lower_bound][i])
+			}
+			lower_bound--
+		}
+
+		// 向上遍历
+		if left_bound <= right_bound {
+			for i := lower_bound; i >= upper_bound; i-- {
+				res = append(res, matrix[i][left_bound])
+			}
+			left_bound++
+		}
+
+	}
+	return res
+}

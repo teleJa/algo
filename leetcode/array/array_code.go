@@ -396,7 +396,7 @@ func rotate(matrix [][]int) {
 
 	n := len(matrix)
 
-	// 先按照左对角线把值翻转
+	// 先按照左上到右下对角线把值翻转
 	for i := 0; i < n; i++ {
 		// 注意此处j=i,j的第一个值是在对角线上
 		for j := i; j < n; j++ {
@@ -424,47 +424,102 @@ func spiralOrder(matrix [][]int) []int {
 	m := len(matrix)
 	n := len(matrix[0])
 	// 左上
-	upper_bound := 0
+	upperBound := 0
 	// 右上
-	right_bound := n - 1
+	rightBound := n - 1
 	// 右下
-	lower_bound := m - 1
+	lowerBound := m - 1
 	// 左下
-	left_bound := 0
+	leftBound := 0
 
 	var res []int
 	for len(res) < m*n {
 
-		if upper_bound <= lower_bound {
+		if upperBound <= lowerBound {
 			// 从右向左遍历
-			for i := left_bound; i <= right_bound; i++ {
-				res = append(res, matrix[upper_bound][i])
+			for i := leftBound; i <= rightBound; i++ {
+				res = append(res, matrix[upperBound][i])
 			}
-			upper_bound++
+			upperBound++
 		}
 
 		// 向下遍历
-		if left_bound <= right_bound {
-			for i := upper_bound; i <= lower_bound; i++ {
-				res = append(res, matrix[i][right_bound])
+		if leftBound <= rightBound {
+			for i := upperBound; i <= lowerBound; i++ {
+				res = append(res, matrix[i][rightBound])
 			}
-			right_bound--
+			rightBound--
 		}
 
 		// 向左遍历
-		if upper_bound <= lower_bound {
-			for i := right_bound; i >= left_bound; i-- {
-				res = append(res, matrix[lower_bound][i])
+		if upperBound <= lowerBound {
+			for i := rightBound; i >= leftBound; i-- {
+				res = append(res, matrix[lowerBound][i])
 			}
-			lower_bound--
+			lowerBound--
 		}
 
 		// 向上遍历
-		if left_bound <= right_bound {
-			for i := lower_bound; i >= upper_bound; i-- {
-				res = append(res, matrix[i][left_bound])
+		if leftBound <= rightBound {
+			for i := lowerBound; i >= upperBound; i-- {
+				res = append(res, matrix[i][leftBound])
 			}
-			left_bound++
+			leftBound++
+		}
+
+	}
+	return res
+}
+
+// 59 螺旋矩阵II 根据n生成1~n*n的矩阵
+func generateMatrix(n int) [][]int {
+
+	res := make([][]int, n)
+	for i := range res {
+		res[i] = make([]int, n)
+	}
+
+	upperBound := 0
+	rightBound := n - 1
+	leftBound := 0
+	lowerBound := n - 1
+
+	for j := 1; j <= n*n; {
+
+		// 从右向左遍历
+		if upperBound <= lowerBound {
+			for i := leftBound; i <= rightBound; i++ {
+				res[upperBound][i] = j
+				j++
+			}
+			upperBound++
+		}
+
+		// 向下遍历
+		if leftBound <= rightBound {
+			for i := upperBound; i <= lowerBound; i++ {
+				res[i][rightBound] = j
+				j++
+			}
+			rightBound--
+		}
+
+		// 向左遍历
+		if upperBound <= lowerBound {
+			for i := rightBound; i >= leftBound; i-- {
+				res[lowerBound][i] = j
+				j++
+			}
+			lowerBound--
+		}
+
+		// 向上遍历
+		if leftBound <= rightBound {
+			for i := lowerBound; i >= upperBound; i-- {
+				res[i][leftBound] = j
+				j++
+			}
+			leftBound++
 		}
 
 	}

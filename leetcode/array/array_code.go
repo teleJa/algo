@@ -470,3 +470,54 @@ func spiralOrder(matrix [][]int) []int {
 	}
 	return res
 }
+
+// LCR 146. 螺旋遍历二维数组
+func spiralArray(array [][]int) []int {
+	var res []int
+	if len(array) == 0 {
+		return res
+	}
+	m := len(array)
+	n := len(array[0])
+
+	upperBound := 0
+	rightBound := n - 1
+	leftBound := 0
+	lowerBound := m - 1
+
+	for len(res) < m*n {
+		// 向右遍历
+		if upperBound <= lowerBound {
+			for i := leftBound; i <= rightBound; i++ {
+				res = append(res, array[upperBound][i])
+			}
+			upperBound++
+		}
+
+		// 向下遍历
+		if leftBound <= rightBound {
+			for i := upperBound; i <= lowerBound; i++ {
+				res = append(res, array[i][rightBound])
+			}
+			rightBound--
+		}
+
+		// 向左遍历
+		if upperBound <= lowerBound {
+			for i := rightBound; i >= leftBound; i-- {
+				res = append(res, array[lowerBound][i])
+			}
+			lowerBound--
+		}
+
+		// 向上遍历
+		if leftBound <= rightBound {
+			for i := lowerBound; i >= upperBound; i-- {
+				res = append(res, array[i][leftBound])
+			}
+			leftBound++
+		}
+
+	}
+	return res
+}

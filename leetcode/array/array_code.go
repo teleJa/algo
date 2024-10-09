@@ -68,8 +68,8 @@ func moveZeroes(nums []int) {
 }
 
 // 此处双向指针做二分查找
-// 167(注意题目要求数组下标从1开始)
-func twoSum(numbers []int, target int) []int {
+// 167(注意题目要求数组下标从1开始,非递减数组)
+func twoSum2(numbers []int, target int) []int {
 
 	left, right := 0, len(numbers)-1
 
@@ -81,6 +81,54 @@ func twoSum(numbers []int, target int) []int {
 			right--
 		}
 		if numbers[left]+numbers[right] < target {
+			left++
+		}
+	}
+	return nil
+}
+
+type Val struct {
+	value, index int
+}
+
+type ValArr []Val
+
+func (v ValArr) Len() int {
+	return len(v)
+}
+
+func (v ValArr) Less(i, j int) bool {
+	return v[i].value < v[j].value
+}
+
+func (v ValArr) Swap(i, j int) {
+	v[i], v[j] = v[j], v[i]
+}
+
+// 1.两数之和
+func twoSum(nums []int, target int) []int {
+
+	var array []Val
+	for i := range nums {
+		array = append(array, Val{
+			nums[i], i,
+		})
+	}
+	// 排序
+	sort.Sort(ValArr(array))
+	left, right := 0, len(nums)-1
+
+	for left < right {
+		valLeft := array[left]
+		valRight := array[right]
+
+		if valLeft.value+valRight.value == target {
+			return []int{valLeft.index, valRight.index}
+		}
+		if valLeft.value+valRight.value > target {
+			right--
+		}
+		if valLeft.value+valRight.value < target {
 			left++
 		}
 	}

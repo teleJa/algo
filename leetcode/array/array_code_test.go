@@ -163,3 +163,32 @@ func Test_twoSum(t *testing.T) {
 		})
 	}
 }
+
+func TestRemoveFromSlice(t *testing.T) {
+
+	nums := []int{-1, -1, 0, 1, 2, 2}
+	newNums := make([]int, len(nums[1:]))
+	copy(newNums, nums[:2])
+	copy(newNums[2:], nums[3:])
+	log.Println(newNums) //  [-1 -1 1 2 2]
+}
+
+func Test_threeSum(t *testing.T) {
+	type args struct {
+		nums []int
+	}
+	tests := []struct {
+		name string
+		args args
+		want [][]int
+	}{
+		{"case1", args{[]int{-1, 0, 1, 2, -1, -4}}, [][]int{{-1, -1, 2}, {-1, 0, 1}}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := threeSum(tt.args.nums); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("threeSum() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

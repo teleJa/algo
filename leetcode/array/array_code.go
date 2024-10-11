@@ -135,6 +135,53 @@ func twoSum(nums []int, target int) []int {
 	return nil
 }
 
+// 15.三数之和
+func threeSum(nums []int) [][]int {
+	// 三数和为0
+	target := 0
+	res := make([][]int, 0)
+
+	// 排序
+	sort.Ints(nums)
+	for i := 0; i < len(nums); i++ {
+		twoNumSum := target - nums[i]
+		newNums := make([]int, len(nums)-i-1)
+		copy(newNums, nums[i+1:])
+		left, right := 0, len(newNums)-1
+		for left < right {
+			sum := newNums[left] + newNums[right]
+			if sum < twoNumSum {
+				// 跳过重复元素
+				l := newNums[left]
+				for left < right && newNums[left] == l {
+					left++
+				}
+			} else if sum > twoNumSum {
+				r := newNums[right]
+				for left < right && newNums[right] == r {
+					right--
+				}
+			} else {
+				res = append(res, []int{nums[i], newNums[left], newNums[right]})
+				l := newNums[left]
+				for left < right && newNums[left] == l {
+					left++
+				}
+				r := newNums[right]
+				for left < right && newNums[right] == r {
+					right--
+				}
+			}
+		}
+
+		// 跳过重复元素
+		for i < len(nums)-1 && nums[i] == nums[i+1] {
+			i++
+		}
+	}
+	return res
+}
+
 // 双指针交换数据
 // 344 反转字符串
 func reverseString(s []byte) {

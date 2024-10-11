@@ -145,6 +145,7 @@ func threeSum(nums []int) [][]int {
 	sort.Ints(nums)
 	for i := 0; i < len(nums); i++ {
 		twoNumSum := target - nums[i]
+		// 从i+1开始寻找两数之和
 		newNums := make([]int, len(nums)-i-1)
 		copy(newNums, nums[i+1:])
 		left, right := 0, len(newNums)-1
@@ -173,6 +174,12 @@ func threeSum(nums []int) [][]int {
 				}
 			}
 		}
+
+		// 此种方式跳过重复元素,执行for循环时i会再次++
+		/*cur := nums[i]
+		for i < len(nums) && nums[i] == cur {
+			i++
+		}*/
 
 		// 跳过重复元素
 		for i < len(nums)-1 && nums[i] == nums[i+1] {

@@ -181,12 +181,68 @@ func threeSum(nums []int) [][]int {
 			i++
 		}*/
 
-		// 跳过重复元素
+		// 跳过重复元素(第一个数不重复即可保证整体不重复)
 		for i < len(nums)-1 && nums[i] == nums[i+1] {
 			i++
 		}
 	}
 	return res
+}
+
+// n数之和
+func nSumTarget(nums []int, n int, start int, target int64) [][]int {
+	res := make([][]int, 0)
+	if n < 2 || len(nums) < n {
+		return res
+	}
+
+	// 两数之和
+	if n == 2 {
+		left, right := start, len(nums)-1
+		for left < right {
+			lv, rv := nums[left], nums[right]
+			if int64(lv+rv) == target {
+				res = append(res, []int{lv, rv})
+				for left < right && nums[left] == lv {
+					left++
+				}
+				for left < right && nums[right] == rv {
+					right--
+				}
+			} else if int64(lv+rv) > target {
+				for left < right && nums[right] == rv {
+					right--
+				}
+			} else {
+				for left < right && nums[left] == lv {
+					left++
+				}
+			}
+		}
+		return res
+	} else {
+		// 递归
+		for i := start; i < len(nums); i++ {
+
+			sumTarget := nSumTarget(nums, n-1, i+1, target-int64(nums[i]))
+			for _, r := range sumTarget {
+				r = append(r, nums[i])
+				res = append(res, r)
+			}
+			// 跳过重复
+			for i < len(nums)-1 && nums[i] == nums[i+1] {
+				i++
+			}
+
+		}
+	}
+	return res
+}
+
+// 四数之和
+func fourSum(nums []int, target int) [][]int {
+	sort.Ints(nums)
+	return nSumTarget(nums, 4, 0, int64(target))
 }
 
 // 双指针交换数据

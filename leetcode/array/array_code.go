@@ -19,11 +19,37 @@ func removeDuplicates(nums []int) int {
 		return 0
 	}
 
+	// 移动元素可以理解为从0开始对原数组添加元素
 	slow, fast := 0, 0
 	for fast < len(nums) {
 		if nums[fast] != nums[slow] {
 			slow++
 			nums[slow] = nums[fast]
+		}
+		fast++
+	}
+	return slow + 1
+}
+
+// 80 删除有序数组中的重复项
+func removeDuplicates2(nums []int) int {
+
+	slow, fast := 0, 0
+	k := 2
+	// 重复次数
+	count := 0
+	for fast < len(nums) {
+		if nums[slow] != nums[fast] {
+			slow++
+			nums[slow] = nums[fast]
+		} else if slow < fast && count < k {
+			slow++
+			nums[slow] = nums[fast]
+		}
+		count++
+		// 重置count
+		if fast < len(nums)-1 && nums[fast] != nums[fast+1] {
+			count = 0
 		}
 		fast++
 	}

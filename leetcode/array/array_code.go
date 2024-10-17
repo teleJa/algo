@@ -6,6 +6,7 @@ import (
 	"slices"
 	"sort"
 	"strings"
+	"unicode"
 )
 
 // 但凡数组有序都可以尝试双指针
@@ -42,7 +43,7 @@ func removeDuplicates2(nums []int) int {
 		if nums[slow] != nums[fast] {
 			slow++
 			nums[slow] = nums[fast]
-		} else if slow < fast && count < k {
+		} else if slow < fast && count < k { // 上面if未命中,说明此时nums[slow]=nums[fast],故count需小于k,而不是小于等于
 			slow++
 			nums[slow] = nums[fast]
 		}
@@ -301,6 +302,30 @@ func isPalindrome(s string) bool {
 	}
 	return true
 
+}
+
+func isPalindrome2(s string) bool {
+
+	// 去除非数字和字母的部分
+	var sb strings.Builder
+	for _, r := range s {
+		if unicode.IsDigit(r) || unicode.IsLetter(r) {
+			sb.WriteByte(byte(unicode.ToLower(r)))
+		}
+
+	}
+	s = sb.String()
+
+	left, right := 0, len(s)-1
+	for left < right {
+
+		if !strings.EqualFold(string(s[left]), string(s[right])) {
+			return false
+		}
+		left++
+		right--
+	}
+	return true
 }
 
 // 5 最长回文子串 (耗时较长,无法ac)

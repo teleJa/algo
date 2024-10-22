@@ -582,6 +582,25 @@ func shiftGrid(grid [][]int, k int) [][]int {
 
 }
 
+// 867 转置矩阵
+func transpose(matrix [][]int) [][]int {
+
+	m := len(matrix)
+	n := len(matrix[0])
+
+	arr := make([][]int, n)
+	for i := range arr {
+		arr[i] = make([]int, m)
+	}
+
+	for i := range matrix {
+		for j := range matrix[i] {
+			arr[j][i] = matrix[i][j]
+		}
+	}
+	return arr
+}
+
 // 151 反转字符串中的单词
 func reverseWords(s string) string {
 

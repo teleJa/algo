@@ -601,6 +601,35 @@ func transpose(matrix [][]int) [][]int {
 	return arr
 }
 
+// 14 最长公共前缀
+func longestCommonPrefix(strs []string) string {
+
+	var res []rune
+
+	s := strs[0]
+	for i, c := range s {
+		found := true
+		for j := 1; j < len(strs); j++ {
+			strSlice := []rune(strs[j])
+			if len(strSlice) <= i {
+				found = false
+				break
+			}
+			if string(strSlice[i]) != string(c) {
+				found = false
+				break
+			}
+		}
+		if found {
+			res = append(res, c)
+		} else {
+			break
+		}
+
+	}
+	return string(res)
+}
+
 // 151 反转字符串中的单词
 func reverseWords(s string) string {
 

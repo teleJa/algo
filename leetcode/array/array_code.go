@@ -630,6 +630,21 @@ func longestCommonPrefix(strs []string) string {
 	return string(res)
 }
 
+func longestCommonPrefix2(strs []string) string {
+	s0 := strs[0]
+	for i := range s0 {
+		for _, s := range strs {
+			// 长度不同或者字符不同
+			if i >= len(s) || rune(s0[i]) != rune(s[i]) {
+				return s0[:i]
+			}
+
+		}
+
+	}
+	return s0
+}
+
 // 151 反转字符串中的单词
 func reverseWords(s string) string {
 

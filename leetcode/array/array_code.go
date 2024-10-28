@@ -848,3 +848,19 @@ func spiralArray(array [][]int) []int {
 	}
 	return res
 }
+
+type NumArray struct {
+	arr []int
+}
+
+func Constructor(nums []int) NumArray {
+	return NumArray{nums}
+}
+
+func (n *NumArray) SumRange(left int, right int) int {
+	sum := 0
+	for i := left; i <= right; i++ {
+		sum += n.arr[i]
+	}
+	return sum
+}

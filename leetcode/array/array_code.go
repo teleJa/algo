@@ -850,17 +850,22 @@ func spiralArray(array [][]int) []int {
 }
 
 type NumArray struct {
-	arr []int
+	arr  []int
+	sums map[int]int
 }
 
 func Constructor(nums []int) NumArray {
-	return NumArray{nums}
+	n := NumArray{
+		arr:  nums,
+		sums: make(map[int]int),
+	}
+	for i := range nums {
+		n.sums[i] = n.sums[i-1] + nums[i]
+	}
+	return n
 }
 
+// SumRange 303
 func (n *NumArray) SumRange(left int, right int) int {
-	sum := 0
-	for i := left; i <= right; i++ {
-		sum += n.arr[i]
-	}
-	return sum
+	return n.sums[right] - n.sums[left] + n.arr[left]
 }

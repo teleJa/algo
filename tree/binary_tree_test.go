@@ -43,7 +43,8 @@ func traverse(root *TreeNode) {
 func TestBFS(t *testing.T) {
 
 	//bfs1(root)
-	bfs2(root)
+	//bfs2(root)
+	bfs3(root)
 }
 
 // 层序遍历1
@@ -96,6 +97,44 @@ func bfs2(root *TreeNode) {
 		}
 		queue = queue[sz:]
 		depth++
+	}
+
+}
+
+type State struct {
+	Node  *TreeNode
+	Depth int
+}
+
+func bfs3(root *TreeNode) {
+
+	var queue []State
+	if root != nil {
+		queue = append(queue, State{root, 1})
+	}
+	// depth 增量
+	delta := 1
+	for len(queue) > 0 {
+		st := queue[0]
+		log.Println("node:", st.Node.Val, "depth:", st.Depth)
+
+		queue = queue[1:]
+		if st.Node.Left != nil {
+			left := State{
+				Node:  st.Node.Left,
+				Depth: st.Depth + delta,
+			}
+			queue = append(queue, left)
+		}
+
+		if st.Node.Right != nil {
+			right := State{
+				Node:  st.Node.Right,
+				Depth: st.Depth + delta,
+			}
+			queue = append(queue, right)
+		}
+
 	}
 
 }

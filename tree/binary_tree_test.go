@@ -30,14 +30,14 @@ func traverse(root *TreeNode) {
 		return
 	}
 
-	// 前序遍历
+	// 前序遍历 // 入栈前
 	//fmt.Println(root.Val)
-	traverse(root.Left)
-	// 中序遍历
+	traverse(root.Left) // 理解为入栈
+	// 中序遍历   // 出栈
 	//fmt.Println(root.Val)
-	traverse(root.Right)
+	traverse(root.Right) // 再入栈
 	// 后序遍历
-	fmt.Println(root.Val)
+	fmt.Println(root.Val) // 出栈
 }
 
 func TestBFS(t *testing.T) {

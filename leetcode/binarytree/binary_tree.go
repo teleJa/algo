@@ -30,3 +30,19 @@ func maxDepth(root *TreeNode) int {
 	}
 	return depth
 }
+
+// 144 二叉树的前序遍历
+func preorderTraversal(root *TreeNode) []int {
+	var res []int
+	preorderTraversal0(root, &res)
+	return res
+}
+
+func preorderTraversal0(root *TreeNode, res *[]int) {
+	if root == nil {
+		return
+	}
+	*res = append(*res, root.Val)
+	preorderTraversal0(root.Left, res)
+	preorderTraversal0(root.Right, res)
+}

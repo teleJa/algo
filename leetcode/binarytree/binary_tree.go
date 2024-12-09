@@ -46,3 +46,19 @@ func preorderTraversal0(root *TreeNode, res *[]int) {
 	preorderTraversal0(root.Left, res)
 	preorderTraversal0(root.Right, res)
 }
+
+// 226 翻转二叉树
+func invertTree(root *TreeNode) *TreeNode {
+
+	var f func(n *TreeNode)
+	f = func(root *TreeNode) {
+		if root == nil {
+			return
+		}
+		root.Left, root.Right = root.Right, root.Left
+		f(root.Left)
+		f(root.Right)
+	}
+	f(root)
+	return root
+}

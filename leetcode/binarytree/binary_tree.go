@@ -105,3 +105,29 @@ func connect(root *Node) *Node {
 	f(root.Left, root.Right)
 	return root
 }
+
+// 114 二叉树展开为链表
+func flatten(root *TreeNode) {
+
+	var f func(root *TreeNode)
+	f = func(root *TreeNode) {
+		if root == nil {
+			return
+		}
+
+		l := root.Left
+		root.Left = nil
+		r := root.Right
+		root.Right = l
+		f(l)
+		f(r)
+
+		// 将原右子树接到当前右子树的右边
+		t := root
+		for t.Right != nil {
+			t = t.Right
+		}
+		t.Right = r
+	}
+	f(root)
+}

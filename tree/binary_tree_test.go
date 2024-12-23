@@ -34,7 +34,7 @@ func traverse(root *TreeNode) {
 	//fmt.Println(root.Val)
 	traverse(root.Left) // 理解为入栈   把traverse函数理解为一个指针,不断的迭代树的节点,类似iter.next
 	// 中序遍历   // 出栈
-	//fmt.Println(root.Val)
+	fmt.Println(root.Val)
 	traverse(root.Right) // 再入栈
 	// 后序遍历
 	//fmt.Println(root.Val) // 出栈

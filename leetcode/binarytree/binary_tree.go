@@ -119,15 +119,15 @@ func flatten(root *TreeNode) {
 		root.Left = nil
 		r := root.Right
 		root.Right = l
-		f(l)
-		f(r)
-
 		// 将原右子树接到当前右子树的右边
 		t := root
 		for t.Right != nil {
 			t = t.Right
 		}
 		t.Right = r
+		f(l)
+		f(r)
+
 	}
 	f(root)
 }

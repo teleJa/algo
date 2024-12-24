@@ -111,22 +111,30 @@ func flatten(root *TreeNode) {
 
 	var f func(root *TreeNode)
 	f = func(root *TreeNode) {
+		// base case
 		if root == nil {
 			return
 		}
 
-		l := root.Left
+		// 利用定义，把左右子树拉平
+		f(root.Left)
+		f(root.Right)
+
+		// *** 后序遍历位置 ***
+		// 1. 左右子树已经被拉平成一条链表
+		left := root.Left
+		right := root.Right
+
+		// 2. 将左子树作为右子树
 		root.Left = nil
-		r := root.Right
-		root.Right = l
-		// 将原右子树接到当前右子树的右边
-		t := root
-		for t.Right != nil {
-			t = t.Right
+		root.Right = left
+
+		// 3. 将原先的右子树接到当前右子树的末端
+		p := root
+		for p.Right != nil {
+			p = p.Right
 		}
-		t.Right = r
-		f(l)
-		f(r)
+		p.Right = right
 
 	}
 	f(root)

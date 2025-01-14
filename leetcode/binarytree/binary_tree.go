@@ -1,5 +1,7 @@
 package binarytree
 
+import "math"
+
 type TreeNode struct {
 	Val         int
 	Left, Right *TreeNode
@@ -138,4 +140,41 @@ func flatten(root *TreeNode) {
 
 	}
 	f(root)
+}
+
+// 654 最大二叉树
+// 构造类问题一般用分解法
+// 构造整课二叉=构造根节点+构造左子树+构造右子树
+func constructMaximumBinaryTree(nums []int) *TreeNode {
+
+	// 返回最大值和index
+	findMax := func(nums []int) (int, int) {
+
+		max, index := math.MinInt32, -1
+
+		for i := range nums {
+			if nums[i] > max {
+				max = nums[i]
+				index = i
+			}
+		}
+		return max, index
+	}
+
+	var f func(nums []int) *TreeNode
+	f = func(nums []int) *TreeNode {
+		if len(nums) == 0 {
+			return nil
+		}
+
+		max, index := findMax(nums)
+		root := &TreeNode{
+			Val: max,
+		}
+		root.Left = f(nums[:index])
+		root.Right = f(nums[index+1:])
+		return root
+
+	}
+	return f(nums)
 }
